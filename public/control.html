@@ -16,7 +16,6 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
         const socket = io();
-        const backgroundMusic = document.getElementById('background-music');
 
         document.getElementById('play-music-button').addEventListener('click', () => {
             socket.emit('playMusic');
@@ -24,17 +23,6 @@
 
         document.getElementById('stop-music-button').addEventListener('click', () => {
             socket.emit('stopMusic');
-        });
-
-        socket.on('musicStatus', (isPlaying) => {
-            const statusElement = document.getElementById('music-status');
-            statusElement.textContent = `Background Music is ${isPlaying ? 'Playing' : 'Paused'}`;
-
-            if (isPlaying) {
-                backgroundMusic.play();
-            } else {
-                backgroundMusic.pause();
-            }
         });
     </script>
 </body>
