@@ -1,0 +1,41 @@
+<!-- public/control.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control Page</title>
+</head>
+<body>
+    <button id="play-music-button">Play Music</button>
+    <button id="stop-music-button">Stop Music</button>
+
+    <audio id="background-music" src="/audio/background_music.mp3" loop></audio>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const backgroundMusic = document.getElementById('background-music');
+
+        document.getElementById('play-music-button').addEventListener('click', () => {
+            socket.emit('playMusic');
+        });
+
+        document.getElementById('stop-music-button').addEventListener('click', () => {
+            socket.emit('stopMusic');
+        });
+
+        socket.on('musicStatus', (isPlaying) => {
+            const statusElement = document.getElementById('music-status');
+            statusElement.textContent = `Background Music is ${isPlaying ? 'Playing' : 'Paused'}`;
+
+            if (isPlaying) {
+                backgroundMusic.play();
+            } else {
+                backgroundMusic.pause();
+            }
+        });
+    </script>
+</body>
+</html>

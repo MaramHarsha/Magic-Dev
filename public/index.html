@@ -1,0 +1,34 @@
+<!-- public/index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+</head>
+<body>
+    <h1>Main Content</h1>
+    <p>Display your main content here.</p>
+    <div id="music-status"></div>
+
+    <audio id="background-music" src="/audio/background_music.mp3" loop></audio>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const backgroundMusic = document.getElementById('background-music');
+
+        socket.on('musicStatus', (isPlaying) => {
+            const statusElement = document.getElementById('music-status');
+            statusElement.textContent = `Background Music is ${isPlaying ? 'Playing' : 'Paused'}`;
+
+            if (isPlaying) {
+                backgroundMusic.play();
+            } else {
+                backgroundMusic.pause();
+            }
+        });
+    </script>
+</body>
+</html>
